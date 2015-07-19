@@ -13,6 +13,11 @@ class Player
     # add instance variables for speed
     @velocity_x = 0
     @velocity_y = 0
+    #instance variable to define the edges of the window 
+    #Gosu::Window class has methods that let us use our @window reference to get the width and height of the window
+    @window = window
+    #radius method to take the center of the ship
+    @radius = 0
   end
 
   # we use draw_rot, a method from gosu::image,
@@ -46,6 +51,19 @@ class Player
     #we use these to slow down the speed, acting like a friction
     @velocity_x *= FRICTION
     @velocity_y *= FRICTION
+    # we add conditionals to delimt the edge of the window
+    if @x > @window.width - @radius
+      @velocity_x = 0
+      @x = @window.width - @radius 
+    end
+    if @x < @radius
+      @velocity_x = 0
+      @x = @radius
+    end
+    if @y > @window.height - @radius
+      @velocity_y = 0
+      @y = @window.height - @radius
+    end
   end
 
 end

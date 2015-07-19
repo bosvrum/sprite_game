@@ -5,7 +5,7 @@ class SpriteGame < Gosu::Window
   WIDTH = 800
   HEIGHT = 600
   def initialize
-    super(800, 600)
+    super(WIDTH, HEIGHT)
     self.caption = 'Sprite Game'
     #in SpriteGame window is self!!
     @player = Player.new(self)
