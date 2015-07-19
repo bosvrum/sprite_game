@@ -18,8 +18,14 @@ class SpriteGame < Gosu::Window
   def update
     @player.turn_left if button_down?(Gosu::KbLeft)
     @player.turn_right if button_down?(Gosu::KbRight)
+    @player.accelerate if button_down?(Gosu::KbUp)
+    @player.move
   end
 end
 
 window = SpriteGame.new
 window.show
+
+
+
+

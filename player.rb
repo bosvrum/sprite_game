@@ -7,6 +7,9 @@ class Player
     @angle = 0
     #store the img on the @image instance variable
     @image = Gosu::Image.new('images/ship.png')
+    # add instance variables for speed
+    @velocity_x = 0
+    @velocity_y = 0
   end
 
   # we use draw_rot, a method from gosu::image,
@@ -24,4 +27,22 @@ class Player
   def turn_left
     @angle -= 3
   end
+
+  # we need to change the velocity with the accelerate method
+  # we use offset_x/y gosu methods 
+  #offset_x takes the angle and an amount as argument and returns the amount in the x directions 
+  def accelerate
+    @velocity_x += Gosu.offset_x(@angle, 2)
+    @velocity_y += Gosu.offset_y(@angle, 2)
+  end
+
+  # we move the ship 
+  def move
+    @x += @velocity_x
+    @y += @velocity_y
+    #we use these to solow down the speed acting like a friction
+    @velocity_x *= 0.9
+    @velocity_y *= 0.9
+  end
+
 end
