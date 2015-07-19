@@ -19,4 +19,8 @@ class Explosion
       @finished = true
     end
   end
+
+  def move
+    @y += 2
+  end
 end

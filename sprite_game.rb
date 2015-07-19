@@ -41,6 +41,10 @@ class SpriteGame < Gosu::Window
       bullet.move
     end
 
+    @explosions.each do |explosion|
+      explosion.move 
+    end
+
     # iterate through bouth of enemies and bullets, establish the distance 
     @enemies.dup.each do |enemy|
       @bullets.dup.each do |bullet|
@@ -56,7 +60,7 @@ class SpriteGame < Gosu::Window
     @explosions.dup.each do |explosion|
       @explosions.delete explosion if explosion.finished
     end
-    
+
     #eliminate the enemies from the array
     @enemies.dup.each do |enemy|
       if enemy.y > HEIGHT + enemy.radius

@@ -26,6 +26,6 @@ class Bullet
     left = -@radius
     top = -@radius
     bottom = @window.height + @radius
-    @x > left && @x < right && @y > top && @y < bottom
+    @x > left and @x < right and @y > top and @y < bottom
   end
 end
