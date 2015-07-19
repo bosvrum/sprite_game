@@ -1,28 +1,69 @@
-require "gosu"
-require_relative 'player'
-require_relative 'enemy'
-require_relative 'bullet'
-require_relative 'explosion'
-
-class SpriteGame < Gosu::Window
+require 'gosu'
+require_relative 'player' 
+require_relative 'enemy' 
+require_relative 'bullet' 
+require_relative 'explosion' 
+class SectorFive < Gosu::Window
   WIDTH = 800
-  HEIGHT = 600
+  HEIGHT = 600 
   ENEMY_FREQUENCY = 0.02
+
   def initialize
     super(WIDTH, HEIGHT)
-    self.caption = 'Sprite Game'
-    #in SpriteGame window is self!!
-    @player = Player.new(self)
-    @enemies = [] #we create an array where we collect our enemies
+    self.caption = "Sector Five"
+    @background_image = Gosu::Image.new('images/start_screen.png') 
+    #here we have our new class with it's initialized method
+    @scene = :start
+  end 
+
+  def initialize_game
+    @player = Player.new(self) 
+    @enemies = []
     @bullets = []
     @explosions = []
+    @scene = :game
   end
 
+  def draw
+    case @scene
+    when :start
+      draw_start
+    when :game
+      draw_game
+    when :end
+      draw_end
+    end
+  end
 
-  # we call the player methods to move the ship using gosu keys
-  #button_down? method is part of gosu::window class
-  # update method knowing as -60 times per second
+  def draw_game
+    @player.draw
+    @enemies.each do |enemy|
+      enemy.draw
+    end
+
+    @bullets.each do |bullet|
+      bullet.draw
+    end
+
+    @explosions.each do |explosion| 
+     explosion.draw
+    end
+  end
+
+  def draw_start
+    @background_image.draw(0,0,0)
+  end
+
   def update
+    case @scene
+    when :game
+      update_game
+    when :end
+      update_end
+    end
+  end
+
+  def update_game
     @player.turn_left if button_down?(Gosu::KbLeft)
     @player.turn_right if button_down?(Gosu::KbRight)
     @player.accelerate if button_down?(Gosu::KbUp)
@@ -45,7 +86,8 @@ class SpriteGame < Gosu::Window
       explosion.move 
     end
 
-    # iterate through bouth of enemies and bullets, establish the distance 
+    # iterate through bouth of enemies and bullets, establish the distance
+    # dup ruby method creates a copy of the array 
     @enemies.dup.each do |enemy|
       @bullets.dup.each do |bullet|
         distance = Gosu.distance(enemy.x, enemy.y, bullet.x, bullet.y) #We use the Gosu.distance() method here
@@ -74,34 +116,26 @@ class SpriteGame < Gosu::Window
     end
   end
 
-  # happens immediately after each iteration of the update method and is used to 'draw' the changes on screen.
-  # do not put any logic in here !!!!
-  def draw
-    @player.draw
-    @enemies.each do |enemy|
-      enemy.draw
-    end
-
-    @bullets.each do |bullet|
-      bullet.draw
-    end
-
-    @explosions.each do |explosion| 
-     explosion.draw
-    end
+  def button_down(id) 
+    case @scene
+    when :start
+      button_down_start(id) 
+    when :game
+      button_down_game(id) 
+    when :end
+      button_down_end(id)
+    end 
   end
- 
- 
-  def button_down(id)
+
+  def button_down_start(id) 
+    initialize_game
+  end
+
+  def button_down_game(id)
     if id == Gosu::KbSpace
       @bullets.push Bullet.new(self, @player.x, @player.y, @player.angle)
     end
   end
 end
-
-window = SpriteGame.new
+window = SectorFive.new
 window.show
-
-
-
-
