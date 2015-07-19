@@ -2,6 +2,8 @@ require "gosu"
 require_relative 'player'
 
 class SpriteGame < Gosu::Window
+  WIDTH = 800
+  HEIGHT = 600
   def initialize
     super(800, 600)
     self.caption = 'Sprite Game'
