@@ -6,3 +6,6 @@
 #When you want the press to do something, and then not do it again until you release the button and press it again, 
 #use button_down(id). 
 #Each key press will fire one bullet, and holding down the key won’t do anything beyond the initial press.
+
+# dup ruby method
+# creates copies of the arrays   

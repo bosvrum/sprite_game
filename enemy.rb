@@ -1,5 +1,7 @@
 class Enemy
   SPEED = 4
+  #To check for a collision between one bullet and and one enemy, we need to know the position and radius of each
+  attr_reader :x, :y, :radius
   def initialize(window)
     @radius = 20
     @x = rand(window.width - 2 * @radius) + @radius #we set x to a random number, that will be the center of the enemy ship
