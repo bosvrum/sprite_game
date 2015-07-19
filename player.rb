@@ -14,4 +14,15 @@ class Player
   def draw
     @image.draw_rot(@x, @y, @angle)
   end
+
+
+  #we need to make the ship move
+
+  def turn_right
+    @angle += 3
+  end
+
+  def turn_left
+    @angle -= 3
+  end
 end
