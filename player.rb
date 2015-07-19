@@ -2,6 +2,7 @@ class Player
   ROTATION_SPEED = 3
   ACCELERATION = 4
   FRICTION = 0.5
+  attr_reader :x, :y, :angle, :radius # we will use these methods in spritegame.rb to create the bullets
   # the window argument we will use to let the ship interct with the edges of the window
   def initialize(window)
     # @x & @y to set the postion on the window

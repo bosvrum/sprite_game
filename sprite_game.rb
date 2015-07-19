@@ -1,16 +1,19 @@
 require "gosu"
 require_relative 'player'
 require_relative 'enemy'
+require_relative 'bullet'
 
 class SpriteGame < Gosu::Window
   WIDTH = 800
   HEIGHT = 600
+  ENEMY_FREQUENCY = 0.02
   def initialize
     super(WIDTH, HEIGHT)
     self.caption = 'Sprite Game'
     #in SpriteGame window is self!!
     @player = Player.new(self)
-    @enemy = Enemy.new(self)
+    @enemies = [] #we create an array where we collect our enemies
+    @bullets = []
   end
 
 
@@ -22,14 +25,40 @@ class SpriteGame < Gosu::Window
     @player.turn_right if button_down?(Gosu::KbRight)
     @player.accelerate if button_down?(Gosu::KbUp)
     @player.move
-    @enemy.move
+    #When used without an argument, the rand() method returns a value between zero and one. 
+    #If ENEMY_FREQUENCY is 0.05, we add an enemy about one frame in twenty. 
+    if rand < ENEMY_FREQUENCY
+      @enemies.push Enemy.new(self)
+    end
+    # iterate to move all the enemies
+    @enemies.each do |enemy|
+      enemy.move
+    end
+
+    @bullets.each do |bullet|
+      bullet.move
+    end
+
   end
 
   # happens immediately after each iteration of the update method and is used to 'draw' the changes on screen.
   # do not put any logic in here !!!!
   def draw
     @player.draw
-    @enemy.draw
+    @enemies.each do |enemy|
+      enemy.draw
+    end
+
+    @bullets.each do |bullet|
+      bullet.draw
+    end
+  end
+
+
+  def button_down(id)
+    if id == Gosu::KbSpace
+      @bullets.push Bullet.new(self, @player.x, @player.y, @player.angle)
+    end
   end
 end
 
