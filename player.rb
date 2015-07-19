@@ -10,14 +10,13 @@ class Player
   end
 
   # we use draw_rot, a method from gosu::image,
-  # these method draws the image rotated by any angle, measured in degrees
+  # the draw method draws the image rotated by any angle, measured in degrees
   def draw
-    @image.draw_rot(@x, @y, @angle)
+    @image.draw_rot(@x, @y, 1, @angle)
   end
 
 
-  #we need to make the ship move
-
+  #we need to make the ship rotate right and left
   def turn_right
     @angle += 3
   end

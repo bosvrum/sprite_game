@@ -12,6 +12,13 @@ class SpriteGame < Gosu::Window
   def draw
     @player.draw
   end
+
+  # we call the player methods to move the ship using gosu keys
+  #button_down? method is part of gosu::window class
+  def update
+    @player.turn_left if button_down?(Gosu::KbLeft)
+    @player.turn_right if button_down?(Gosu::KbRight)
+  end
 end
 
 window = SpriteGame.new
