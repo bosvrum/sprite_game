@@ -1,7 +1,7 @@
 class Player
   ROTATION_SPEED = 3
-  ACCELERATION = 2
-  FRICTION = 0.9
+  ACCELERATION = 4
+  FRICTION = 0.5
   # the window argument we will use to let the ship interct with the edges of the window
   def initialize(window)
     # @x & @y to set the postion on the window
@@ -37,8 +37,7 @@ class Player
   end
 
   # we need to change the velocity with the accelerate method
-  # we use offset_x/y gosu methods 
-  #offset_x takes the angle and an amount as argument and returns the amount in the x directions 
+  #Gosu::offset returns the distance between the origin and the point to which you would get if you moved in the specified angle by the specified distance
   def accelerate
     @velocity_x += Gosu.offset_x(@angle, ACCELERATION)
     @velocity_y += Gosu.offset_y(@angle, ACCELERATION)
@@ -46,9 +45,11 @@ class Player
 
   # we move the ship 
   def move
+    #we're modifying the ship's coordinates based on the velocity calculated in the accelerate method (which is called when we hit 'Up')
     @x += @velocity_x
     @y += @velocity_y
     #we use these to slow down the speed, acting like a friction
+    #calculates the rate of acceleration 
     @velocity_x *= FRICTION
     @velocity_y *= FRICTION
     # we add conditionals to delimt the edge of the window

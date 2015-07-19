@@ -13,19 +13,23 @@ class SpriteGame < Gosu::Window
     @enemy = Enemy.new(self)
   end
 
-  def draw
-    @player.draw
-    @enemy.draw
-  end
 
   # we call the player methods to move the ship using gosu keys
   #button_down? method is part of gosu::window class
+  # update method knowing as -60 times per second
   def update
     @player.turn_left if button_down?(Gosu::KbLeft)
     @player.turn_right if button_down?(Gosu::KbRight)
     @player.accelerate if button_down?(Gosu::KbUp)
     @player.move
     @enemy.move
+  end
+
+  # happens immediately after each iteration of the update method and is used to 'draw' the changes on screen.
+  # do not put any logic in here !!!!
+  def draw
+    @player.draw
+    @enemy.draw
   end
 end
 
